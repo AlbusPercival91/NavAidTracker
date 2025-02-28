@@ -11,4 +11,11 @@ public class PdfData {
 	private String action;
 	private String actionInfo;
 	private String latLong;
+
+	@Override
+	public String toString() {
+		return "PdfData{" + "noticeToMarinersNumber='" + noticeToMarinersNumber + '\'' + ", chartNumber='" + chartNumber
+				+ '\'' + ", action='" + action + '\'' + ", actionInfo='" + actionInfo + '\'' + ", latLong='" + latLong
+				+ '\'' + '}';
+	}
 }

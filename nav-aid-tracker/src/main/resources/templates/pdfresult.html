@@ -2,6 +2,25 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <title>PDF Processing Result</title>
+<style>
+/* Add borders to the table and its cells */
+table {
+	width: 100%;
+	border-collapse: collapse; /* Ensures borders are merged */
+}
+
+th, td {
+	border: 1px solid black;
+	/* Adds a 1px solid black border to each cell */
+	padding: 8px; /* Adds padding inside cells for better readability */
+	text-align: left; /* Aligns text to the left */
+}
+
+th {
+	background-color: #f2f2f2;
+	/* Adds a light gray background to header cells */
+}
+</style>
 </head>
 <body>
 	<h2>PDF Processing Result</h2>
@@ -9,7 +28,7 @@
 	<table>
 		<thead>
 			<tr>
-				<th>Notice to Mariners Number</th>
+				<th>NTM Number</th>
 				<th>Chart Number</th>
 				<th>Action</th>
 				<th>Action Info</th>
@@ -17,6 +36,7 @@
 			</tr>
 		</thead>
 		<tbody>
+			<!-- Iterate over the entries list -->
 			<tr th:each="pdfData : ${entries}">
 				<td th:text="${pdfData.noticeToMarinersNumber}">Notice to
 					Mariners Number</td>
@@ -27,7 +47,6 @@
 			</tr>
 		</tbody>
 	</table>
-
 
 	<br>
 	<a href="/">Upload Another PDF</a>
