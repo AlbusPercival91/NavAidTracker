@@ -21,10 +21,9 @@ public class PdfController {
 	@Autowired
 	private PdfService pdfService;
 
-	// Show the upload page
 	@GetMapping("/")
 	public String uploadPage() {
-		return "upload"; // This will return the upload.html page
+		return "upload";
 	}
 
 	@PostMapping("/processPdf")
@@ -39,9 +38,9 @@ public class PdfController {
 			file.transferTo(tempFile);
 
 			List<PdfData> pdfEntries = pdfService.extractData(tempFile.getAbsolutePath());
-			log.info("Extracted entries: {}", pdfEntries); // Log the extracted data
+			log.info("Extracted entries: {}", pdfEntries);
 
-			model.addAttribute("entries", pdfEntries); // Add the list to the model
+			model.addAttribute("entries", pdfEntries);
 			tempFile.delete();
 
 		} catch (IOException e) {
@@ -50,6 +49,6 @@ public class PdfController {
 			return "upload";
 		}
 
-		return "pdfresult"; // Return the Thymeleaf template
+		return "pdfresult";
 	}
 }
