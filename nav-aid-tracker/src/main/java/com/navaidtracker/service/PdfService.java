@@ -3,49 +3,66 @@ package com.navaidtracker.service;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.text.PDFTextStripper;
 import org.springframework.stereotype.Service;
-import com.navaidtracker.model.PdfEntry;
+import com.navaidtracker.model.PdfData;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 @Service
 public class PdfService {
 
-	public List<PdfEntry> extractData(String filePath) {
-		List<PdfEntry> entries = new ArrayList<>();
+	// Extract data from the PDF
+	public List<PdfData> extractData(String filePath) throws IOException {
+		// Open the PDF file
+		File file = new File(filePath);
+		PDDocument document = PDDocument.load(file);
 
-		try {
-			File file = new File(filePath);
-			PDDocument document = PDDocument.load(file);
-			PDFTextStripper stripper = new PDFTextStripper();
-			String text = stripper.getText(document);
-			document.close();
+		// Create a PDFTextStripper to extract text from the PDF
+		PDFTextStripper stripper = new PDFTextStripper();
 
-			Pattern pattern = Pattern.compile(
-					"(\\d{4})\\s([A-Z]+)\\s-\\s(.*?)\\.\\nSource:.*?\\nChart\\s+(\\d+) .*?\\n(\\w+)\\s+(.*?)\\s+(\\d{2}°\\s\\d{2}´·\\d+[NS]),\\s(\\d{2}°\\s\\d{2}´·\\d+[EW])",
-					Pattern.DOTALL);
+		// Extract the text from the PDF
+		String text = stripper.getText(document);
+		document.close(); // Always close the document when done
 
-			Matcher matcher = pattern.matcher(text);
+		// Process the extracted text and extract relevant data
+		List<PdfData> pdfEntries = new ArrayList<>();
+		PdfData data = new PdfData();
 
-			while (matcher.find()) {
-				PdfEntry entry = new PdfEntry(matcher.group(1), // Notice Number
-						matcher.group(2), // Country
-						matcher.group(3), // Description
-						matcher.group(4), // Chart Number
-						matcher.group(5), // Action (Delete, Amend, etc.)
-						matcher.group(6), // Action Info
-						matcher.group(7), // Latitude
-						matcher.group(8) // Longitude
-				);
-				entries.add(entry);
-			}
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		data.setNoticeToMarinersNumber(extractNoticeToMarinersNumber(text));
+		data.setChartNumber(extractChartNumber(text));
+		data.setAction(extractAction(text));
+		data.setActionInfo(extractActionInfo(text));
+		data.setLatLong(extractLatLong(text));
 
-		return entries;
+		pdfEntries.add(data); // Add the processed data to the list
+
+		return pdfEntries; // Return the list of processed data
+	}
+
+	// Helper methods to extract specific data using regex or custom logic
+	private String extractNoticeToMarinersNumber(String text) {
+		// Your logic to extract the "Notice to Mariners Number" from the text
+		return "Extracted Number"; // Placeholder
+	}
+
+	private String extractChartNumber(String text) {
+		// Your logic to extract the "Chart Number" from the text
+		return "Extracted Chart Number"; // Placeholder
+	}
+
+	private String extractAction(String text) {
+		// Your logic to extract the "Action" (Amend, Insert, etc.) from the text
+		return "Extracted Action"; // Placeholder
+	}
+
+	private String extractActionInfo(String text) {
+		// Your logic to extract the "Action Info" from the text
+		return "Extracted Action Info"; // Placeholder
+	}
+
+	private String extractLatLong(String text) {
+		// Your logic to extract the "Lat/Long" from the text
+		return "Extracted Lat/Long"; // Placeholder
 	}
 }

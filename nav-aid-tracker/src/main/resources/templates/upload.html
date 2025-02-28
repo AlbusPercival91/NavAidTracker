@@ -1,16 +1,16 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-<title>Upload PDF</title>
+    <title>Upload PDF</title>
 </head>
 <body>
-	<h2>Upload a PDF for Processing</h2>
+    <h2>Upload a PDF for Processing</h2>
 
-	<form method="POST" action="/processPdf" enctype="multipart/form-data">
-		<input type="file" name="file" required>
-		<button type="submit">Upload & Process</button>
-	</form>
+    <form method="POST" action="/processPdf" enctype="multipart/form-data">
+        <input type="file" name="file" required>
+        <button type="submit">Upload & Process</button>
+    </form>
 
-	<p th:if="${error}" style="color: red;" th:text="${error}"></p>
+    <p th:if="${error}" style="color: red;" th:text="${error}"></p>
 </body>
 </html>

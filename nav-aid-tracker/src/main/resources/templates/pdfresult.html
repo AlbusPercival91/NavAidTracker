@@ -1,51 +1,36 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-<title>PDF Extraction Result</title>
-<style>
-table {
-	width: 100%;
-	border-collapse: collapse;
-}
-
-th, td {
-	border: 1px solid black;
-	padding: 8px;
-	text-align: left;
-}
-
-th {
-	background-color: #f2f2f2;
-}
-</style>
+<title>PDF Processing Result</title>
 </head>
 <body>
-	<h2>Extracted PDF Data</h2>
+	<h2>PDF Processing Result</h2>
+
 	<table>
 		<thead>
 			<tr>
-				<th>Notice Number</th>
-				<th>Country</th>
-				<th>Description</th>
+				<th>Notice to Mariners Number</th>
 				<th>Chart Number</th>
 				<th>Action</th>
 				<th>Action Info</th>
-				<th>Latitude</th>
-				<th>Longitude</th>
+				<th>Lat/Long</th>
 			</tr>
 		</thead>
 		<tbody>
-			<tr th:each="entry : ${entries}">
-				<td th:text="${entry.noticeNumber}"></td>
-				<td th:text="${entry.country}"></td>
-				<td th:text="${entry.description}"></td>
-				<td th:text="${entry.chartNumber}"></td>
-				<td th:text="${entry.action}"></td>
-				<td th:text="${entry.actionInfo}"></td>
-				<td th:text="${entry.latitude}"></td>
-				<td th:text="${entry.longitude}"></td>
+			<tr th:each="pdfData : ${entries}">
+				<td th:text="${pdfData.noticeToMarinersNumber}">Notice to
+					Mariners Number</td>
+				<td th:text="${pdfData.chartNumber}">Chart Number</td>
+				<td th:text="${pdfData.action}">Action</td>
+				<td th:text="${pdfData.actionInfo}">Action Info</td>
+				<td th:text="${pdfData.latLong}">Lat/Long</td>
 			</tr>
 		</tbody>
 	</table>
+
+
+	<br>
+	<a href="/">Upload Another PDF</a>
 </body>
 </html>
+
