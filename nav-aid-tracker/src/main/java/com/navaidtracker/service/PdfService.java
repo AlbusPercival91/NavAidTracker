@@ -24,9 +24,9 @@ public class PdfService {
 			String text = stripper.getText(document);
 			document.close();
 
-			// Regex Patterns
 			Pattern pattern = Pattern.compile(
-					"(\\d{4})\\s.*?-\\s(.*?)\\s-\\s(.*?)\\.\\nSource:.*?\\nChart\\s+(\\d+) .*?\\n(\\w+)\\s+(.*?)\\s+(\\d{2}°\\s\\d{2}´·\\d+\\w),\\s(\\d{2}°\\s\\d{2}´·\\d+\\w)");
+					"(\\d{4})\\s([A-Z]+)\\s-\\s(.*?)\\.\\nSource:.*?\\nChart\\s+(\\d+) .*?\\n(\\w+)\\s+(.*?)\\s+(\\d{2}°\\s\\d{2}´·\\d+[NS]),\\s(\\d{2}°\\s\\d{2}´·\\d+[EW])",
+					Pattern.DOTALL);
 
 			Matcher matcher = pattern.matcher(text);
 
